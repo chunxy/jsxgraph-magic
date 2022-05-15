@@ -1,23 +1,29 @@
-from IPython.core.interactiveshell import InteractiveShell
-from IPython.display import display, Javascript
+from IPython.display import display, Javascript, Pretty
+from IPython.core.magic import register_line_cell_magic
 
-def jsxgraph(line: str, cell: str):
+@register_line_cell_magic
+def jsxgraph(line: str, cell: str = None):
+
+    info = str('The cell magic should be used as:\n\n'
+               '%%jsxgraph height1 ... heightn\n'
+               '<drawboard binding and JSXGraph description>\n')
+    erro = 'Please pass positive numeric value for heights!\n'
+
+    if cell is None:
+        return display(Pretty(info))
     args = line.strip().split()
     if len(args) == 0:
-        return 'Please input like <num_boards> <height_1> ... <height_num_boards>!'
+        return display(Pretty(info))
+
     for arg in args:
-        if not arg.isnumeric():
-            return 'Please input numeric values!'
+        if not arg.isnumeric() or arg[0] == '-':
+            return display(Pretty(erro + info))
 
     template = str('let div{0} = document.createElement("div");\n'
                    'div{0}.id = "board{0}"\n'
                    'div{0}.style = "height:{1}px;"\n'
                    'element.append(div{0});\n')
-    num_boards = int(args[0])
-    heights = args[1:]
-    heights.extend([300 for i in range(num_boards - len(heights))])
-
-    insert_dom = ''.join(template.format(i, heights[i]) for i in range(num_boards))
+    insert_dom = ''.join(template.format(i, args[i]) for i in range(len(args)))
 
     # These two scripts will invalidate the RequireJS context
     # when importing the JSXGraph in Jupyter Notebook
@@ -39,6 +45,3 @@ def jsxgraph(line: str, cell: str):
     display(Javascript(insert_dom + nullify))
     display(Javascript(cell + restore, lib=lib, css=css))
     return None
-
-def load_ipython_extension(ipython: InteractiveShell):
-    ipython.register_magic_function(jsxgraph, 'cell')

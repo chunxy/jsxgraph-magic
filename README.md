@@ -19,24 +19,34 @@
 
 ## Usage
 
-- As with usual **IPython** magic, remember to `%load_ext jsxgraph` before using this magic.
+- As with usual **IPython** magic, remember to `%load_ext jsxgraph-magic` before using this magic.
 
 - This repo contains two magics: one line magic and one cell magic, both named as **jsxgraph**. 
 
   - The line magic requires no arguments and simply prompt the help message. 
 
-  - The cell magic should be used as:
-
     ```
-    %%jsxgraph n height1 ... heightn
+    %jsxgraph
+    ```
+  
+  - The cell magic should be used as:
+  
+    ```
+    %%jsxgraph height1 ... heightn
     <JSXGraph descriptions>
     ```
 
-    where `n` is the number of boards to create and `height1 ... heightn` are the heights of `n` boards in the unit of `px`. `<JSXGraph descriptions>` should be the JavaScript to describe the graphs. 
-
-    It will return you `n ` `HTMLELement`s in the output cell, with `id` being `board0`, `board1`, ..., `board${n}` which you can use to bind the drawing board. 
-
-    For example, `%%jsxgraph 2 300 300` will create two boards with height being `300px`. Their ids will be `board0`, `board1` respectively. 
+    It will create `n ` `div`s in the output cell, with `id` being `board0`, `board1`, ..., `board${n-1}`, and height being  `height1 ... heightn` in the unit of `px`.  `<JSXGraph descriptions>`  is the JavaScript code to bind the drawboard with corresponding `HTMLElement` as well as to describe the graphs.
+  
+    ```
+    %%jsxgraph 300 300
+    // Initialize board
+    var drawboard0 = JXG.JSXGraph.initBoard('board0');
+    var drawboard1 = JXG.JSXGraph.initBoard('board1');
+    // More code
+    ```
+    
+    As an example, the above code will create two `div`s with height both being `300px`. Their `id`s will be `board0`, `board1` respectively. Then we bind them with the corresponding `drawboard`s.
 
 
 

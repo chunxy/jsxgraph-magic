@@ -13,7 +13,7 @@
   
   ```shell
   git clone https://github.com/chunxy/jsxgraph-magic.git
-  cd dimagic
+  cd jsxgraph-magic
   pip install ./
   ```
 

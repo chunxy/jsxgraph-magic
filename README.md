@@ -21,32 +21,58 @@
 
 - As with usual **IPython** magic, remember to `%load_ext jsxgraph-magic` before using this magic.
 
-- This repo contains two magics: one line magic and one cell magic, both named as **jsxgraph**. 
+- This repo contains the cell magic named as **jsxgraph**. The magic should be used as:
 
-  - The line magic requires no arguments and simply prompt the help message. 
+  ```
+   %%jsxgraph [-w WIDTH] [-h HEIGHT] id
+   <JSXGraph descriptions>
+  ```
+  
+  where **id** is the `id` of the HTML element to embed the JSXGraph board, **width** and **height** is the width and height of the board in `px` respectively,  **\<JSXGraph descriptions\>** is the usual JavaScript code to describe the graph using the JSXGraph library.
+  
+  You may also run the following magic to see the description:
+  
+  ```
+  %%jsxgraph?
+  ```
 
-    ```
-    %jsxgraph
-    ```
-  
-  - The cell magic should be used as:
-  
-    ```
-    %%jsxgraph height1 ... heightn
-    <JSXGraph descriptions>
-    ```
+A simple example of [Five-circle Theorem](https://en.wikipedia.org/wiki/Five_circles_theorem) (code from JSXGrpah website) will be
 
-    It will create `n ` `div`s in the output cell, with `id` being `board0`, `board1`, ..., `board${n-1}`, and height being  `height1 ... heightn` in the unit of `px`.  `<JSXGraph descriptions>`  is the JavaScript code to bind the drawboard with corresponding `HTMLElement` as well as to describe the graphs.
-  
-    ```
-    %%jsxgraph 300 300
-    // Initialize board
-    var drawboard0 = JXG.JSXGraph.initBoard('board0');
-    var drawboard1 = JXG.JSXGraph.initBoard('board1');
-    // More code
-    ```
-    
-    As an example, the above code will create two `div`s with height both being `300px`. Their `id`s will be `board0`, `board1` respectively. Then we bind them with the corresponding `drawboard`s.
+```
+%%load_ext jsxgraph-magic
+```
+
+```
+%%jsxgraph jxgbox -w 400 -h 400
+var brd = JXG.JSXGraph.initBoard('jxgbox',{boundingbox:[-5,5,5,-5]});
+var p = [], l = [], i = [], c = [], j = [], k;
+
+p[0] = brd.create('point',[-2.5,-3],{name:'',strokeColor:'#7355ff',fillColor:'#7355ff'});
+p[1] = brd.create('point',[-0,4],{name:'',strokeColor:'#7355ff',fillColor:'#7355ff'});
+p[2] = brd.create('point',[2.5,-3],{name:'',strokeColor:'#7355ff',fillColor:'#7355ff'});
+p[3] = brd.create('point',[-4,0],{name:'',strokeColor:'#7355ff',fillColor:'#7355ff'});
+p[4] = brd.create('point',[4,0],{name:'',strokeColor:'#7355ff',fillColor:'#7355ff'});
+
+for (k=0;k<5;k++) {
+   l[k] = brd.create('segment',[p[k],p[(k+1)%5]],{strokeColor:'black',strokeWidth:1});
+}
+
+for (k=0;k<5;k++) {
+   i[k] = brd.create('intersection',[l[k],l[(k+2)%5],0],{name:'',strokeColor:'#EAEA00',fillColor:'#EAEA00'});
+}
+
+for (k=0;k<5;k++) {
+   c[k] = brd.create('circumcircle',[p[k],i[k],i[(k+2)%5]],{strokeColor:'gray', strokeWidth:1, point: {visible: false}});
+}
+for (k=0;k<5;k++) {
+   j[k] = brd.create('intersection',[c[k],c[(k+2)%5],0],{name:'',strokeColor:'#EA0000',fillColor:'#EA0000'});
+}
+
+cc = brd.create('circumcircle',[j[0],j[2],j[3]],{strokeColor:'red',strokeWidth:2,point:{strokeColor:'#000000',fillColor:'#000000',size:1}});
+brd.update();
+```
+
+
 
 
 

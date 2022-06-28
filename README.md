@@ -1,25 +1,31 @@
 # jsxgraph-magic
 
-**jsxgraph-magic** is an **IPython** magic wrapper for the famous JavaScript math-sketching package [JSXGraph](https://github.com/jsxgraph/jsxgraph). **jsxgraph-magic** enables you to use **JSXGraph** in Notebook and see the sketching in the output cell.
+**jsxgraph-magic** is an IPython magic wrapper for the famous JavaScript math-sketching package [JSXGraph](https://github.com/jsxgraph/jsxgraph). **jsxgraph-magic** enables you to use JSXGraph in Notebook and see the sketching in the output cell.
 
 ## Requirements
-- A network connection is required to fetch the **JavaScript** and **CSS** file for **JSXGraph**.
-- **IPython** is required since the magics are concept from the **IPython**.
-- **IPython** alone cannot be much useful. It is usually accompanied with Jupyter Notebook or Jupyter Lab. Please try either.
+- A network connection is required to fetch the JavaScript and CSS file for JSXGraph.
+- IPython is required since the magic is the concept of the IPython.
+- IPython alone cannot be much useful. Please try [Jupyter Lab](https://github.com/jupyterlab/jupyterlab) or [Jupyter Notebook](https://github.com/jupyter/notebook) to edit with the Notebook.
 
 ## Installation
 
-- From source code
+- From PIP:
+  
+  ```shell
+  pip install jsxgraph-magic
+  ```
+  
+- Development install:
   
   ```shell
   git clone https://github.com/chunxy/jsxgraph-magic.git
   cd jsxgraph-magic
-  pip install ./
+  pip install -e ./
   ```
 
 ## Usage
 
-- As with usual **IPython** magic, remember to `%load_ext jsxgraph-magic` before using this magic.
+- As with usual IPython magic, remember to `%load_ext jsxgraph-magic` before using this magic.
 
 - This repo contains the cell magic named as **jsxgraph**. The magic should be used as:
 

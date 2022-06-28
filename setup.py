@@ -10,7 +10,7 @@ README = (HERE / "README.md").read_text()
 # This call to setup() does all the work
 setup(
     name="jsxgraph-magic",
-    version="0.0.1",
+    version="0.0.2",
     description="Jupyter Notebook/Lab magic wrapper for the JavaScript math-sketching utility JSXGraph",
     long_description=README,
     long_description_content_type="text/markdown",
@@ -23,9 +23,8 @@ setup(
         "License :: OSI Approved :: MIT License",
     ],    
     install_requires=[
-        'ipython>=7.0'
+        'ipython~=7.0'
     ],
-
     packages=["jsxgraph-magic"],
     include_package_data=True,
 )
